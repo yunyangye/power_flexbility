@@ -1,4 +1,4 @@
-#import convert as ct
+import convert as ct
 import subprocess
 from shutil import copyfile,rmtree
 from os import makedirs,remove
@@ -11,32 +11,12 @@ def runModel(eplus_path,weather_file,eplus_file,output_file):
     if not err is None:
         print(err.decode('utf-8'))
 
-idf_file = './baseline1'
+idf_file = './baseline'
 weather_file = 'USA_NM_Albuquerque.Intl.Sunport.723650_TMY3'
 eplus_path = 'C:/EnergyPlusV8-6-0/energyplus.exe'
 
 # modify the default idf file
-#line_record = ct.idfUpdate('./baseline')
-line_record = ['    DataCenter_basement_ZN_6_CLGSETP_DC_SCH,  !- Name\n', 
-               '    DataCenter_bot_ZN_6_CLGSETP_DC_SCH,  !- Name\n', 
-               '    DataCenter_mid_ZN_6_CLGSETP_DC_SCH,  !- Name\n', 
-               '    DataCenter_top_ZN_6_CLGSETP_DC_SCH,  !- Name\n', 
-               '    Basement_CLGSETP_SCH_YES_OPTIMUM,  !- Name\n', 
-               '    Core_bottom_CLGSETP_SCH_YES_OPTIMUM,  !- Name\n', 
-               '    Core_mid_CLGSETP_SCH_YES_OPTIMUM,  !- Name\n', 
-               '    Core_top_CLGSETP_SCH_YES_OPTIMUM,  !- Name\n', 
-               '    Perimeter_bot_ZN_3_CLGSETP_SCH_YES_OPTIMUM,  !- Name\n', 
-               '    Perimeter_bot_ZN_2_CLGSETP_SCH_YES_OPTIMUM,  !- Name\n', 
-               '    Perimeter_bot_ZN_1_CLGSETP_SCH_YES_OPTIMUM,  !- Name\n', 
-               '    Perimeter_bot_ZN_4_CLGSETP_SCH_YES_OPTIMUM,  !- Name\n', 
-               '    Perimeter_mid_ZN_3_CLGSETP_SCH_YES_OPTIMUM,  !- Name\n', 
-               '    Perimeter_mid_ZN_2_CLGSETP_SCH_YES_OPTIMUM,  !- Name\n', 
-               '    Perimeter_mid_ZN_1_CLGSETP_SCH_YES_OPTIMUM,  !- Name\n', 
-               '    Perimeter_mid_ZN_4_CLGSETP_SCH_YES_OPTIMUM,  !- Name\n', 
-               '    Perimeter_top_ZN_3_CLGSETP_SCH_YES_OPTIMUM,  !- Name\n', 
-               '    Perimeter_top_ZN_2_CLGSETP_SCH_YES_OPTIMUM,  !- Name\n', 
-               '    Perimeter_top_ZN_1_CLGSETP_SCH_YES_OPTIMUM,  !- Name\n', 
-               '    Perimeter_top_ZN_4_CLGSETP_SCH_YES_OPTIMUM,  !- Name\n']
+line_record = ct.idfUpdate(idf_file)
 
 # run the default idf file
 runModel(eplus_path,weather_file + '.epw',idf_file + '.idf','./temp')

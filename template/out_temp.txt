@@ -1,0 +1,62 @@
+  Output:Variable,*,Zone Mean Air Temperature,Timestep;
+  Output:Variable,*,Zone Thermostat Heating Setpoint Temperature,Timestep;
+  Output:Variable,*,Zone Thermostat Cooling Setpoint Temperature,Timestep;      
+  Output:Variable,*,currentMonthV,Timestep;
+  Output:Variable,*,currentDayOfMonthV,Timestep;
+  Output:Variable,*,currentHourV,Timestep;
+  Output:Variable,*,currentMinuteV,Timestep;
+  Output:Variable,*,Facility Total Electric Demand Power,Timestep;
+
+  EnergyManagementSystem:OutputVariable,
+    currentMinuteV,           !- Name
+    currentMinuteV,           !- EMS Variable Name
+    Averaged,                !- Type of Data in Variable
+    SystemTimestep;            !- Update Frequency
+
+  EnergyManagementSystem:OutputVariable,
+    currentHourV,             !- Name
+    currentHourV,             !- EMS Variable Name
+    Averaged,                !- Type of Data in Variable
+    SystemTimestep;            !- Update Frequency
+
+  EnergyManagementSystem:OutputVariable,
+    currentDayOfMonthV,       !- Name
+    currentDayOfMonthV,       !- EMS Variable Name
+    Averaged,                !- Type of Data in Variable
+    SystemTimestep;            !- Update Frequency
+
+  EnergyManagementSystem:OutputVariable,
+    currentMonthV,            !- Name
+    currentMonthV,            !- EMS Variable Name
+    Averaged,                !- Type of Data in Variable
+    SystemTimestep;            !- Update Frequency	
+  EnergyManagementSystem:ProgramCallingManager,
+    GettimeV,                 !- Name
+    EndOfSystemTimestepBeforeHVACReporting,  !- EnergyPlus Model Calling Point
+    GetTimelagV;              !- Program Name 1	
+
+
+  EnergyManagementSystem:Program,
+    GetTimelagV,              !- Name
+    SET currentMinuteV = Minute,  !- Program Line 1
+    SET currentMonthV = Month,!- Program Line 2
+    SET currentDayOfMonthV = DayOfMonth,  !- <none>
+    Set currentHourV = Hour;  !- <none>	
+
+  EnergyManagementSystem:GlobalVariable,
+    currentMinuteV;           !- Erl Variable 1 Name
+
+!Month
+
+  EnergyManagementSystem:GlobalVariable,
+    currentMonthV;            !- Erl Variable 1 Name
+
+!Day of month (1-31)
+
+  EnergyManagementSystem:GlobalVariable,
+    currentDayOfMonthV;       !- Erl Variable 1 Name
+
+!Hour (0-23)
+
+  EnergyManagementSystem:GlobalVariable,
+    currentHourV;             !- Erl Variable 1 Name	
